@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+/** @format */
+import { SessionProvaider } from "../context/sessionContext";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <SessionProvaider>
+      <Component {...pageProps} />
+    </SessionProvaider>
+  );
 }
 
-export default MyApp
+export default MyApp;
