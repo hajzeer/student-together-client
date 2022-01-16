@@ -16,7 +16,7 @@ const Container = styled.section`
   justify-content: center;
 `;
 
-const dashboard = () => {
+const Dashboard = () => {
   const [isPost, setIsPost] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -43,4 +43,4 @@ const dashboard = () => {
     </LayoutDashboard>
   );
 };
-export default dashboard;
+export default Dashboard;
