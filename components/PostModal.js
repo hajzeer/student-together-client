@@ -1,6 +1,7 @@
 /** @format */
 import { useState, useContext } from "react";
 import styled from "styled-components";
+import { url } from "../utils/utils";
 
 const Container = styled.form`
   position: fixed;
@@ -94,7 +95,7 @@ const PostModal = ({ visible }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      fetch(process.env.URL + `/posts`, {
+      fetch(url + `/posts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

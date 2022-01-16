@@ -5,6 +5,7 @@ import Layout from "../layout/layout";
 import Hero from "../components/heroImage";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { url } from "../utils/utils";
 
 const Container = styled.section`
   width: 100%;
@@ -128,7 +129,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      fetch(process.env.URL + `/user/signup`, {
+      fetch(url + `/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

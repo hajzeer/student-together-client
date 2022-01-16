@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Hero from "../components/heroImage";
 import Layout from "../layout/layout";
 import { SessionContext } from "../context/sessionContext";
+import { url } from "../utils/utils";
 
 const Container = styled.section`
   padding: 0;
@@ -106,7 +107,7 @@ const Home = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      fetch(process.env.URL + `/user/signin`, {
+      fetch(url + `/user/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

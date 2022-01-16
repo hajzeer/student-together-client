@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import GetAllPosts from "../components/GetAllPosts";
+import { url } from "../utils/utils";
 
 const Container = styled.section`
   width: 100%;
@@ -103,9 +104,7 @@ const Profile = () => {
   }
 
   const getData = async () => {
-    const response = await fetch(
-      process.env.URL + `/posts/profile/${user.username}`
-    );
+    const response = await fetch(url + `/posts/profile/${user.username}`);
     const data = await response.json();
 
     if (user && data) {

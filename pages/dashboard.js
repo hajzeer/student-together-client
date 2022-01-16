@@ -4,6 +4,7 @@ import GetAllPosts from "../components/GetAllPosts";
 import styled from "styled-components";
 import LayoutDashboard from "../layout/layoutDashboard";
 import { idChanger } from "../functions/idChanger";
+import { url } from "../utils/utils";
 
 const Container = styled.section`
   width: 100%;
@@ -21,8 +22,8 @@ const dashboard = () => {
 
   const getData = async () => {
     const [responsePost, responseUser] = await Promise.all([
-      fetch(process.env.URL + `/posts`),
-      fetch(process.env.URL + `/user/profile`),
+      fetch(url + `/posts`),
+      fetch(url + `/user/profile`),
     ]);
     const dataPost = await responsePost.json();
     const dataUser = await responseUser.json();
