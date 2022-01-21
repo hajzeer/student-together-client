@@ -46,6 +46,7 @@ const LayoutDashboard = ({ children }) => {
           href='https://fonts.googleapis.com/css2?family=Nunito:wght@300;500;700;900&display=swap'
           rel='stylesheet'
         />
+        <link href='https://css.gg/loadbar-alt.css' rel='stylesheet' />
       </Head>
       <GlobalStyle />
       <Header />

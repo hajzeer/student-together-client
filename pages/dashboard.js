@@ -5,6 +5,7 @@ import styled from "styled-components";
 import LayoutDashboard from "../layout/layoutDashboard";
 import { idChanger } from "../functions/idChanger";
 import { url } from "../utils/utils";
+import Loading from "../components/Loading";
 
 const Container = styled.section`
   width: 100%;
@@ -38,7 +39,7 @@ const Dashboard = () => {
   return (
     <LayoutDashboard>
       <Container>
-        {isLoading ? <GetAllPosts items={isPost} /> : <p>loading</p>}
+        {isLoading ? <GetAllPosts items={isPost} /> : <Loading />}
       </Container>
     </LayoutDashboard>
   );

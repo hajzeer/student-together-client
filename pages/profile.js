@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 
 import GetAllPosts from "../components/GetAllPosts";
 import { url } from "../utils/utils";
+import Loading from "../components/Loading";
 
 const Container = styled.section`
   width: 100%;
@@ -158,7 +159,7 @@ const Profile = () => {
         </Container>
       ) : (
         <Container>
-          <p>loading</p>
+          <Loading />
         </Container>
       )}
     </LayoutDashboard>
