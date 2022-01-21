@@ -25,23 +25,47 @@ const LabelStyled = styled.label`
   font-weight: 700;
 `;
 
-const FirstPage = styled.div`
-  width: 100%;
-  padding: 100px 0 0 0;
+const FirstPage = styled.div.attrs((props) => ({
+  className: props.className,
+}))`
+  display: none;
 
-  display: ${(props) => (props.visible ? "none" : "flex")};
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  &.active {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
-const SecondPage = styled.div`
-  width: 100%;
-  height: 100vh;
+const SecondPage = styled.div.attrs((props) => ({
+  className: props.className,
+}))`
+  display: none;
 
-  display: ${(props) => (props.visible ? "flex" : "none")};
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  &.active {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+const ThirdPage = styled.div.attrs((props) => ({
+  className: props.className,
+}))`
+  display: none;
+
+  &.active {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const InputStyle = styled.input`
@@ -51,15 +75,14 @@ const InputStyle = styled.input`
   padding: 5px 20px;
   margin: 5px 0;
   border-radius: 25px;
-  border: ${(props) =>
-    props.fail ? "2px solid #FF0000" : "1px solid #b2b2b2"};
+  border: 1px solid #b2b2b2;
   font-size: 15px;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
   &::placeholder {
     font-family: "Oswald", sans-serif;
-    color: ${(props) => (props.fail ? " #FF0000" : " #b2b2b2")};
+    color: 1px solid #b2b2b2;
   }
   &:focus {
     border: 3px solid #83e494;
@@ -112,7 +135,7 @@ const RegisterButton = styled.button`
 `;
 
 const Register = () => {
-  const [isVisible, setIsVisible] = useState("");
+  const [isVisible, setIsVisible] = useState(0);
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -158,8 +181,9 @@ const Register = () => {
     <Layout>
       <Container>
         <Hero image='/heroImage.jpg'>register</Hero>
+
         <FormConainer onSubmit={handleSubmit}>
-          <FirstPage visible={isVisible}>
+          <FirstPage className={isVisible === 0 ? "active" : "unactive"}>
             <LabelStyled>username</LabelStyled>
             <InputStyle
               type='text'
@@ -188,6 +212,14 @@ const Register = () => {
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
+            <RegisterButton
+              type='button'
+              visible={isVisible}
+              onClick={() => setIsVisible(1)}>
+              Next
+            </RegisterButton>
+          </FirstPage>
+          <SecondPage className={isVisible === 1 ? "active" : "unactive"}>
             <LabelStyled>University</LabelStyled>
             <InputStyle
               type='text'
@@ -219,11 +251,11 @@ const Register = () => {
             <RegisterButton
               type='button'
               visible={isVisible}
-              onClick={() => setIsVisible(!isVisible)}>
+              onClick={() => setIsVisible(2)}>
               Next
             </RegisterButton>
-          </FirstPage>
-          <SecondPage visible={isVisible}>
+          </SecondPage>
+          <ThirdPage className={isVisible === 2 ? "active" : "unactive"}>
             <LabelStyled>e-mail</LabelStyled>
             <InputStyle
               type='email'
@@ -248,7 +280,7 @@ const Register = () => {
             <RegisterButton type='submit' visible={isVisible}>
               Sign up
             </RegisterButton>
-          </SecondPage>
+          </ThirdPage>
         </FormConainer>
       </Container>
     </Layout>
