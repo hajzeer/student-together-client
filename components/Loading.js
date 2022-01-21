@@ -2,21 +2,26 @@
 
 import styled from "styled-components";
 
-const Container = styled.section`
-  width: 100%;
-  height: 100vh;
-
+const LoadingContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-self: center;
+  align-items: center;
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
 `;
 
 const Loading = () => {
   return (
-    <Container>
+    <LoadingContainer>
       <i className='gg-loadbar-alt'></i>
-    </Container>
+    </LoadingContainer>
   );
 };
 export default Loading;

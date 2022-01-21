@@ -158,9 +158,7 @@ const Profile = () => {
           <GetAllPosts items={isPost} />
         </Container>
       ) : (
-        <Container>
-          <Loading />
-        </Container>
+        <Loading />
       )}
     </LayoutDashboard>
   );
