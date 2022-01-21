@@ -12,8 +12,6 @@ const Container = styled.section`
   height: 100vh;
 `;
 const FormConainer = styled.form`
-  width: 100%;
-  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,7 +29,7 @@ const FirstPage = styled.div.attrs((props) => ({
   display: none;
 
   &.active {
-    width: 100%;
+    width: auto;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -45,7 +43,7 @@ const SecondPage = styled.div.attrs((props) => ({
   display: none;
 
   &.active {
-    width: 100%;
+    width: auto;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -59,7 +57,7 @@ const ThirdPage = styled.div.attrs((props) => ({
   display: none;
 
   &.active {
-    width: 100%;
+    width: auto;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -88,6 +86,14 @@ const InputStyle = styled.input`
     border: 3px solid #83e494;
     outline: none;
   }
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const RegisterButton = styled.button`
@@ -132,6 +138,23 @@ const RegisterButton = styled.button`
   &:hover::after {
     transform: translateX(-100%);
   }
+`;
+
+const BackButton = styled.button`
+  width: 140px;
+  height: 30px;
+  margin: 5px 0;
+  align-self: flex-start;
+  background: #83e494;
+
+  border-radius: 25px;
+  border: 4px solid #83e494;
+  color: #fff;
+  font-weight: 900;
+  font-size: 14px;
+  text-align: center;
+  margin: 5px 0;
+  cursor: pointer;
 `;
 
 const Register = () => {
@@ -184,13 +207,6 @@ const Register = () => {
 
         <FormConainer onSubmit={handleSubmit}>
           <FirstPage className={isVisible === 0 ? "active" : "unactive"}>
-            <LabelStyled>username</LabelStyled>
-            <InputStyle
-              type='text'
-              name='username'
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
             <LabelStyled>First Name</LabelStyled>
             <InputStyle
               type='text'
@@ -212,10 +228,7 @@ const Register = () => {
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
-            <RegisterButton
-              type='button'
-              visible={isVisible}
-              onClick={() => setIsVisible(1)}>
+            <RegisterButton type='button' onClick={() => setIsVisible(1)}>
               Next
             </RegisterButton>
           </FirstPage>
@@ -248,14 +261,23 @@ const Register = () => {
               value={degreeOfStudy}
               onChange={(e) => setDegreeOfStudy(e.target.value)}
             />
-            <RegisterButton
-              type='button'
-              visible={isVisible}
-              onClick={() => setIsVisible(2)}>
-              Next
-            </RegisterButton>
+            <ButtonContainer>
+              <BackButton type='button' onClick={() => setIsVisible(0)}>
+                Back
+              </BackButton>
+              <RegisterButton type='button' onClick={() => setIsVisible(2)}>
+                Next
+              </RegisterButton>
+            </ButtonContainer>
           </SecondPage>
           <ThirdPage className={isVisible === 2 ? "active" : "unactive"}>
+            <LabelStyled>username</LabelStyled>
+            <InputStyle
+              type='text'
+              name='username'
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
             <LabelStyled>e-mail</LabelStyled>
             <InputStyle
               type='email'
@@ -277,9 +299,12 @@ const Register = () => {
               value={password_confirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}
             />
-            <RegisterButton type='submit' visible={isVisible}>
-              Sign up
-            </RegisterButton>
+            <ButtonContainer>
+              <BackButton type='button' onClick={() => setIsVisible(1)}>
+                Back
+              </BackButton>
+              <RegisterButton type='submit'>Sign up</RegisterButton>
+            </ButtonContainer>
           </ThirdPage>
         </FormConainer>
       </Container>
