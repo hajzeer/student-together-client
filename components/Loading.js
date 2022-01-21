@@ -15,7 +15,7 @@ const Container = styled.section`
 const Loading = () => {
   return (
     <Container>
-      <i class='gg-loadbar-alt'></i>
+      <i className='gg-loadbar-alt'></i>
     </Container>
   );
 };
