@@ -12,7 +12,11 @@ body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-
+    background: linear-gradient(
+    0deg,
+    rgba(189, 255, 201, 1) 0%,
+    rgba(131, 228, 148, 1) 100%
+  );
 
     font-family: "Nunito", sans-serif;
 }

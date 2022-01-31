@@ -1,6 +1,7 @@
 /** @format */
 
 import styled from "styled-components";
+import Link from "next/link";
 
 const Container = styled.section`
   width: 80%;
@@ -70,7 +71,9 @@ const GetAllPosts = ({ items }) => {
               <ProfileSection>
                 <ProfileDiv></ProfileDiv>
                 <ProfileSectionInner>
-                  <AuthorParagraph>@{userId}</AuthorParagraph>
+                  <Link href={`/profile/${userId}`}>
+                    <AuthorParagraph>@{userId}</AuthorParagraph>
+                  </Link>
                   <UnivParagraph>{universityOfCreator}</UnivParagraph>
                 </ProfileSectionInner>
               </ProfileSection>
