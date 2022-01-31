@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import GetAllPosts from "../components/GetAllPosts";
 import styled from "styled-components";
 import LayoutDashboard from "../layout/layoutDashboard";
-import { idChanger } from "../functions/idChanger";
+import { idChanger, byDate } from "../functions/helperFuncs";
 import { url } from "../utils/utils";
 import Loading from "../components/Loading";
 
@@ -29,6 +29,8 @@ const Dashboard = () => {
     const dataPost = await responsePost.json();
     const dataUser = await responseUser.json();
     idChanger(dataPost, dataUser);
+
+    dataPost.sort(byDate);
     setIsPost(dataPost), setIsLoading(!isLoading);
   };
 

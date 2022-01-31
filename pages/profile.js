@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import GetAllPosts from "../components/GetAllPosts";
 import { url } from "../utils/utils";
 import Loading from "../components/Loading";
+import { byDate } from "../functions/helperFuncs";
 
 const Container = styled.section`
   width: 100%;
@@ -95,6 +96,10 @@ const LogoutButton = styled.button`
   }
 `;
 
+const ImageStyle = styled(Image)`
+  z-index: 0;
+`;
+
 const Profile = () => {
   const [isPost, setIsPost] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -112,7 +117,7 @@ const Profile = () => {
       data.forEach((post) => {
         post.userId = user.username;
       });
-
+      data.sort(byDate);
       setIsLoading(!isLoading), setIsPost(data);
     }
   };
@@ -133,7 +138,7 @@ const Profile = () => {
           <DataContainer>
             <LogoutButton onClick={handleClick}>
               {" "}
-              <Image src='/power.png' width={40} height={40} />
+              <ImageStyle src='/power.png' width={40} height={40} />
             </LogoutButton>
             <ProfileImg></ProfileImg>
             <NameStyledParagraph>
@@ -145,11 +150,11 @@ const Profile = () => {
             </InnerDataContainer>
             <DescriptionParagraph>{user.description}</DescriptionParagraph>
             <SchoolContainer>
-              <Image src='/school_1.png' width={30} height={30} />
+              <ImageStyle src='/school_1.png' width={30} height={30} />
               <CommonParagraph>{user.university}</CommonParagraph>
             </SchoolContainer>
             <SchoolContainer>
-              <Image src='/school_2.png' width={30} height={30} />
+              <ImageStyle src='/school_2.png' width={30} height={30} />
               <CommonParagraph>
                 {user.speciality}, term: {user.term}
               </CommonParagraph>

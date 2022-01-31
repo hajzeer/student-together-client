@@ -14,6 +14,8 @@ const Container = styled.section`
   justify-content: space-around;
 
   background: rgba(131, 228, 148, 1);
+
+  z-index: 999;
 `;
 
 const Subject = styled.h2`

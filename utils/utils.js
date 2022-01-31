@@ -1,3 +1,4 @@
 /** @format */
 
-export const url = `https://student-together.herokuapp.com/api`;
+export const url =
+  `http://localhost:5000/api` || `https://student-together.herokuapp.com/api`;

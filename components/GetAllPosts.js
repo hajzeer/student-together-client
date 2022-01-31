@@ -77,7 +77,9 @@ const GetAllPosts = ({ items }) => {
               <DescriptionParagraph>{description}</DescriptionParagraph>
               <DateParagraph>
                 {new Date(updatedAt).toDateString()}{" "}
-                {new Date(updatedAt).getHours()}:
+                {(new Date(updatedAt).getHours() < 10 ? "0" : "") +
+                  new Date(updatedAt).getHours()}
+                :
                 {(new Date(updatedAt).getMinutes() < 10 ? "0" : "") +
                   new Date(updatedAt).getMinutes()}
               </DateParagraph>
