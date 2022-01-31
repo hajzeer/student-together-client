@@ -62,6 +62,9 @@ const ProfileSectionInner = styled.div`
 `;
 
 const GetAllPosts = ({ items }) => {
+  if (typeof window !== "undefined") {
+    const user = JSON.parse(window.sessionStorage.getItem("user"));
+  }
   return (
     <>
       {items.map(
@@ -71,7 +74,12 @@ const GetAllPosts = ({ items }) => {
               <ProfileSection>
                 <ProfileDiv></ProfileDiv>
                 <ProfileSectionInner>
-                  <Link href={`/profile/${userId}`}>
+                  <Link
+                    href={
+                      userId !== user.username
+                        ? `/profile/${userId}`
+                        : `/profile`
+                    }>
                     <AuthorParagraph>@{userId}</AuthorParagraph>
                   </Link>
                   <UnivParagraph>{universityOfCreator}</UnivParagraph>

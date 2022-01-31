@@ -13,14 +13,14 @@ import { byDate } from "../functions/helperFuncs";
 
 const Container = styled.section`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   margin: 0;
   padding: 60px 0;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   background: linear-gradient(
     0deg,
     rgba(189, 255, 201, 1) 0%,
