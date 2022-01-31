@@ -9,7 +9,7 @@ const Profiles = ({ items }) => {
 };
 export async function getStaticPaths() {
   // Call an external API endpoint to get users
-  const res = await fetch(`http://localhost:5000/api/user/profile/`);
+  const res = await fetch(url + `/user/profile/`);
   const items = await res.json();
   // Get the paths we want to pre-render based on users
   const paths = items.map((item) => ({
@@ -22,9 +22,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(
-    `http://localhost:5000/api/user/profile/${params.username}`
-  );
+  const res = await fetch(url + `/user/profile/${params.username}`);
   const items = await res.json();
 
   return {
