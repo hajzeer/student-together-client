@@ -116,7 +116,9 @@ const Profiles = ({ items }) => {
   };
 
   useEffect(() => {
-    getData();
+    if (items) {
+      getData();
+    }
   }, []);
 
   return (

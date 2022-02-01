@@ -18,6 +18,7 @@ const AuthorParagraph = styled.p`
   font-size: 20px;
   padding: 0;
   margin: 0;
+  cursor: pointer;
 `;
 
 const UnivParagraph = styled.p`
