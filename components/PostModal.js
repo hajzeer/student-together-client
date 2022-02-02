@@ -2,6 +2,7 @@
 import { useState, useContext } from "react";
 import styled from "styled-components";
 import { url } from "../utils/utils";
+import { useRouter } from "next/router";
 
 const Container = styled.form`
   position: fixed;
@@ -9,6 +10,7 @@ const Container = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100vh;
   padding: 0;
@@ -27,16 +29,20 @@ const Container = styled.form`
 
 const TextAreaStyled = styled.textarea`
   width: 80%;
-  height: 400px;
-
+  height: 250px;
   margin: 15px 0;
   padding: 10px 15px;
-
+  border: ${(props) =>
+    props.fail ? "2px solid #FF0000" : "1px solid #b2b2b2"};
   border-radius: 25px;
   background: #e0e0e0;
   resize: auto;
 
   font-size: 20px;
+
+  &::placeholder {
+    color: ${(props) => (props.fail ? "#FF0000" : "#b2b2b2")};
+  }
 `;
 
 const PostButton = styled.button`
@@ -46,9 +52,9 @@ const PostButton = styled.button`
   position: relative;
 
   border-radius: 25px;
-  border: 4px solid #83e494;
+  border: 4px solid #3dbe4a;
   overflow: hidden;
-  color: #83e494;
+  color: #3dbe4a;
   font-weight: 800;
   font-size: 14px;
   text-align: center;
@@ -74,7 +80,7 @@ const PostButton = styled.button`
     border-radius: 25px;
     top: 0;
     left: 100%;
-    background: #3dbe4a;
+    background: #d2d2d2;
     transition: all 0.3s ease-in-out;
     z-index: 1;
   }
@@ -85,6 +91,9 @@ const PostButton = styled.button`
 
 const PostModal = ({ visible }) => {
   const [description, setDescription] = useState([]);
+  const [isFailed, setIsFailed] = useState(false);
+
+  const router = useRouter();
 
   if (typeof window !== "undefined") {
     const user = JSON.parse(window.sessionStorage.getItem("user"));
@@ -95,27 +104,35 @@ const PostModal = ({ visible }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      fetch(url + `/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ description, userId, universityOfCreator }),
-      }).then((response) => response.json());
-      setDescription("");
+      if (description.length == 0) {
+        setIsFailed(true);
+      } else {
+        fetch(url + `/posts`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ description, userId, universityOfCreator }),
+        }).then((response) => response.json());
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <Container onClick={handleSubmit} visibility={visible}>
+    <Container onSubmit={handleSubmit} visibility={visible}>
       <TextAreaStyled
         type='text'
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        placeholder="What's up?"
+        placeholder={
+          !isFailed
+            ? "What's up?"
+            : "Text is too short or too long (1:1000 charakters)"
+        }
+        fail={isFailed}
       />
       <PostButton type='submit' />
     </Container>

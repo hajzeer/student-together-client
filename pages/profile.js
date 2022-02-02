@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import LayoutDashboard from "../layout/layoutDashboard";
 import Image from "next/image";
@@ -10,6 +10,7 @@ import GetAllPosts from "../components/GetAllPosts";
 import { url } from "../utils/utils";
 import Loading from "../components/Loading";
 import { byDate } from "../functions/helperFuncs";
+import { SessionContext } from "../context/sessionContext";
 
 const Container = styled.section`
   width: 100%;
@@ -39,6 +40,24 @@ const InnerDataContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  align-items: center;
+`;
+
+const InnerContainer = styled.form`
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const ProfileImg = styled.div`
@@ -95,14 +114,87 @@ const LogoutButton = styled.button`
     transform: scale(0.8);
   }
 `;
+const EditButton = styled.button`
+  display: ${(props) => (props.visible ? `none` : `block`)};
+
+  background: none;
+  outline: none;
+  border: none;
+  transition: all 0.3s ease-in-out;
+  &:active {
+    transform: scale(0.8);
+  }
+`;
 
 const ImageStyle = styled(Image)`
   z-index: 0;
 `;
 
+const TextAreaStyled = styled.textarea`
+  width: 80%;
+  height: 80px;
+
+  padding: 10px 15px;
+
+  border-radius: 25px;
+  background: transparent;
+  resize: auto;
+
+  font-size: 15px;
+`;
+
+const CommonButton = styled.button`
+  width: 140px;
+  height: 30px;
+  background: #fff;
+  position: relative;
+
+  border-radius: 15px;
+  border: 4px solid #3dbe4a;
+  overflow: hidden;
+  color: #3dbe4a;
+  font-weight: 800;
+  font-size: 14px;
+  text-align: center;
+  margin: 5px 0;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    top: 0;
+    left: 100%;
+    background: #3dbe4a;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+  }
+  &:hover::after {
+    transform: translateX(-100%);
+  }
+`;
+
 const Profile = () => {
   const [isPost, setIsPost] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [description, setDescription] = useState([]);
+
+  const { setUser } = useContext(SessionContext);
+
   const router = useRouter();
 
   if (typeof window !== "undefined") {
@@ -122,9 +214,33 @@ const Profile = () => {
     }
   };
 
-  const handleClick = () => {
+  const logOutClick = () => {
     window.sessionStorage.clear();
     router.push("/");
+  };
+
+  const editClick = () => {
+    setIsEdit(!isEdit);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try {
+      fetch(url + `/user/profile/${user.username}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ description }),
+      }).then((response) => response.json());
+      const newUser = user;
+      newUser.description = description;
+      setUser(newUser);
+      setIsEdit(!isEdit);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -136,10 +252,10 @@ const Profile = () => {
       {isLoading ? (
         <Container>
           <DataContainer>
-            <LogoutButton onClick={handleClick}>
-              {" "}
+            <LogoutButton onClick={logOutClick}>
               <ImageStyle src='/power.png' width={40} height={40} />
             </LogoutButton>
+
             <ProfileImg></ProfileImg>
             <NameStyledParagraph>
               {user.firstName} {user.lastName}
@@ -148,7 +264,27 @@ const Profile = () => {
               <UserNameParagraph>@{user.username}</UserNameParagraph>
               <CityParagraph>{user.city}</CityParagraph>
             </InnerDataContainer>
-            <DescriptionParagraph>{user.description}</DescriptionParagraph>
+            {isEdit ? (
+              <InnerContainer onSubmit={handleSubmit}>
+                <TextAreaStyled
+                  type='text'
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder='Change description'
+                />
+                <ButtonContainer>
+                  <CommonButton type='submit'>submit</CommonButton>
+                  <CommonButton onClick={editClick}>cancel</CommonButton>
+                </ButtonContainer>
+              </InnerContainer>
+            ) : (
+              <InnerDataContainer>
+                <DescriptionParagraph>{user.description}</DescriptionParagraph>
+                <EditButton visible={isEdit} onClick={editClick}>
+                  <ImageStyle src='/pencil.png' width={30} height={30} />
+                </EditButton>
+              </InnerDataContainer>
+            )}
             <SchoolContainer>
               <ImageStyle src='/school_1.png' width={30} height={30} />
               <CommonParagraph>{user.university}</CommonParagraph>

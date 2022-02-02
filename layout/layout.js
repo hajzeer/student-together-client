@@ -9,11 +9,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Nunito", sans-serif;
-    background: linear-gradient(
-    0deg,
-    rgba(189, 255, 201, 1) 0%,
-    rgba(131, 228, 148, 1) 100%
-  );
+
 }
 `;
 
