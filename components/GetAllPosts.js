@@ -31,6 +31,7 @@ const UnivParagraph = styled.p`
   margin: 0;
 `;
 const DescriptionParagraph = styled.p`
+  width: 100%;
   font-size: 22px;
 `;
 const DateParagraph = styled.p`
@@ -169,7 +170,7 @@ const ButtonContainer = styled.div`
   align-items: center;
 `;
 
-const GetAllPosts = ({ items }) => {
+const GetAllPosts = ({ items, handleChange }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isID, setIsID] = useState("");
   const [isDescription, setIsDesciption] = useState("");
@@ -199,7 +200,6 @@ const GetAllPosts = ({ items }) => {
       }).then((response) => response.json());
       setIsDesciption("");
       setIsEdit(false);
-      router.reload();
     } catch (err) {
       console.log(err);
     }
@@ -211,10 +211,14 @@ const GetAllPosts = ({ items }) => {
         response.json()
       );
       setIsEdit(false);
-      router.reload();
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleCancel = () => {
+    setIsEdit(false);
+    setIsDesciption("");
   };
 
   return (
@@ -255,13 +259,18 @@ const GetAllPosts = ({ items }) => {
                     onChange={(e) => setIsDesciption(e.target.value)}
                   />
                   <ButtonContainer>
-                    <CommonButton type='submit'>submit</CommonButton>
-                    <CommonButton
-                      type='button'
-                      onClick={() => setIsEdit(false)}>
+                    <CommonButton type='submit' onClick={handleChange}>
+                      submit
+                    </CommonButton>
+                    <CommonButton type='button' onClick={handleCancel}>
                       cancel
                     </CommonButton>
-                    <TrashButton type='button' onClick={handleDelete}>
+                    <TrashButton
+                      type='button'
+                      onClick={() => {
+                        handleDelete();
+                        handleChange();
+                      }}>
                       <ImageStyle src='/trash.png' width={35} height={35} />
                     </TrashButton>
                   </ButtonContainer>

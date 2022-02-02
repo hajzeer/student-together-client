@@ -210,7 +210,7 @@ const Profile = () => {
         post.userId = user.username;
       });
       data.sort(byDate);
-      setIsLoading(!isLoading), setIsPost(data);
+      setIsLoading(true), setIsPost(data);
     }
   };
 
@@ -241,6 +241,12 @@ const Profile = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleFetchAgain = () => {
+    setTimeout(() => {
+      getData();
+    }, 1000);
   };
 
   useEffect(() => {
@@ -296,7 +302,7 @@ const Profile = () => {
               </CommonParagraph>
             </SchoolContainer>
           </DataContainer>
-          <GetAllPosts items={isPost} />
+          <GetAllPosts items={isPost} handleChange={handleFetchAgain} />
         </Container>
       ) : (
         <Loading />

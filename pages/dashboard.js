@@ -31,7 +31,13 @@ const Dashboard = () => {
     idChanger(dataPost, dataUser);
 
     dataPost.sort(byDate);
-    setIsPost(dataPost), setIsLoading(!isLoading);
+    setIsPost(dataPost), setIsLoading(true);
+  };
+
+  const handleFetchAgain = () => {
+    setTimeout(() => {
+      getData();
+    }, 1000);
   };
 
   useEffect(() => {
@@ -41,7 +47,11 @@ const Dashboard = () => {
   return (
     <LayoutDashboard>
       <Container>
-        {isLoading ? <GetAllPosts items={isPost} /> : <Loading />}
+        {isLoading ? (
+          <GetAllPosts items={isPost} handleChange={handleFetchAgain} />
+        ) : (
+          <Loading />
+        )}
       </Container>
     </LayoutDashboard>
   );

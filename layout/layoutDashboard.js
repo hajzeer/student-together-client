@@ -35,6 +35,7 @@ const LayoutDashboard = ({ children }) => {
       setIsVisible(true);
     } else setIsVisible(false);
   };
+
   return (
     <Container visible={isVisible}>
       <Head>

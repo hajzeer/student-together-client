@@ -115,6 +115,7 @@ const PostModal = ({ visible }) => {
           credentials: "include",
           body: JSON.stringify({ description, userId, universityOfCreator }),
         }).then((response) => response.json());
+        router.reload();
       }
     } catch (err) {
       console.log(err);
