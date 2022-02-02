@@ -113,7 +113,7 @@ const TextAreaStyled = styled.textarea`
 
   border-radius: 25px;
   background: transparent;
-  resize: auto;
+  resize: none;
 
   font-size: 15px;
 `;
@@ -197,6 +197,7 @@ const GetAllPosts = ({ items }) => {
         credentials: "include",
         body: JSON.stringify({ description }),
       }).then((response) => response.json());
+      setIsDesciption("");
       setIsEdit(false);
       router.reload();
     } catch (err) {
@@ -205,11 +206,11 @@ const GetAllPosts = ({ items }) => {
   };
 
   const handleDelete = () => {
-    setIsEdit(false);
     try {
       fetch(url + `/posts/${isID}`, { method: "DELETE" }).then((response) =>
         response.json()
       );
+      setIsEdit(false);
       router.reload();
     } catch (err) {
       console.log(err);
