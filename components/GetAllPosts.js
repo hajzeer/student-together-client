@@ -117,6 +117,10 @@ const TextAreaStyled = styled.textarea`
   resize: none;
 
   font-size: 15px;
+
+  &::placeholder {
+    color: ${(props) => (props.fail ? "#FF0000" : "#b2b2b2")};
+  }
 `;
 
 const CommonButton = styled.button`
@@ -174,6 +178,7 @@ const GetAllPosts = ({ items, handleChange }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isID, setIsID] = useState("");
   const [isDescription, setIsDesciption] = useState("");
+  const [isFailed, setIsFailed] = useState(false);
 
   const router = useRouter();
 
@@ -189,17 +194,22 @@ const GetAllPosts = ({ items, handleChange }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      const description = isDescription;
-      fetch(url + `/posts/${isID}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ description }),
-      }).then((response) => response.json());
-      setIsDesciption("");
-      setIsEdit(false);
+      if (isDescription.length <= 0) {
+        setIsFailed(true);
+      } else {
+        const description = isDescription;
+        fetch(url + `/posts/${isID}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ description }),
+        }).then((response) => response.json());
+        setIsDesciption("");
+        setIsEdit(false);
+        setIsFailed(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -218,6 +228,7 @@ const GetAllPosts = ({ items, handleChange }) => {
 
   const handleCancel = () => {
     setIsEdit(false);
+    setIsFailed(false);
     setIsDesciption("");
   };
 
@@ -255,7 +266,12 @@ const GetAllPosts = ({ items, handleChange }) => {
                   <TextAreaStyled
                     type='text'
                     value={isDescription}
-                    placeholder='Change description'
+                    placeholder={
+                      !isFailed
+                        ? "Change description"
+                        : "Text is too short or too long (1:1000 charakters)"
+                    }
+                    fail={isFailed}
                     onChange={(e) => setIsDesciption(e.target.value)}
                   />
                   <ButtonContainer>
