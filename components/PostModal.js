@@ -115,7 +115,9 @@ const PostModal = ({ visible }) => {
           credentials: "include",
           body: JSON.stringify({ description, userId, universityOfCreator }),
         }).then((response) => response.json());
-        router.reload();
+        setTimeout(() => {
+          router.reload();
+        }, 500);
       }
     } catch (err) {
       console.log(err);

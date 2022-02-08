@@ -6,6 +6,7 @@ import Header from "./header";
 import Footer from "./footer";
 import Head from "next/head";
 import PostModal from "../components/PostModal";
+import { handleFetchAgain } from "../pages/dashboard";
 
 const GlobalStyle = createGlobalStyle`
 body {

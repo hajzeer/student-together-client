@@ -37,7 +37,7 @@ const Dashboard = () => {
   const handleFetchAgain = () => {
     setTimeout(() => {
       getData();
-    }, 1000);
+    }, 500);
   };
 
   useEffect(() => {
