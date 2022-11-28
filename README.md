@@ -1,1 +1,1 @@
-## Study project
+## University project
